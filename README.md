@@ -17,7 +17,7 @@
 
 ## 链接
 
-- [Demo](https://leezng.github.io/vue-json-pretty)
+- 当前项目 demo： [Demo](https://secretlovez.github.io/vue-json-petty-sign/)
 - vue-json-pretty： [Github](https://github.com/leezng/vue-json-pretty)
 
 ## 安装
