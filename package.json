@@ -1,6 +1,6 @@
 {
   "name": "vue-json-pretty-sign",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A JSON tree view component that is easy to use and also supports data selection.",
   "author": "leezng <im.leezng@gmail.com>",
   "main": "lib/vue-json-pretty.js",
