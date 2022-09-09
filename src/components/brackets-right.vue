@@ -39,7 +39,11 @@ export default {
   computed: {
     signComment() {
       let signValue = "";
-      if (this.signKeys && this.signKeys[this.currentKey] !== undefined) {
+      if (
+        this.signKeys &&
+        this.signKeys[this.currentKey] !== undefined &&
+        this.signKeys[this.currentKey] !== ""
+      ) {
         signValue = ` // ${this.signKeys[this.currentKey]}`;
       }
       return this.showSignComment && signValue;

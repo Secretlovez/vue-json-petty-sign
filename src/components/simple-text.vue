@@ -69,7 +69,11 @@ export default {
     signComment() {
       // 如果当前键值为标记键值对，且展示标记注释，则返回标记注释
       let signValue = "";
-      if (this.signKeys && this.signKeys[this.currentKey] !== undefined) {
+      if (
+        this.signKeys &&
+        this.signKeys[this.currentKey] !== undefined &&
+        this.signKeys[this.currentKey] !== ""
+      ) {
         signValue = ` // ${this.signKeys[this.currentKey]}`;
       }
       return this.showSignComment && signValue;

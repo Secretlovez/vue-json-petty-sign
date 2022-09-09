@@ -7,7 +7,8 @@
       <div class="block">
         <h3>JSON:</h3>
         <textarea v-model="val" />
-
+        <h3>signKeys:</h3>
+        <textarea v-model="signStr" />
         <h3>Options:</h3>
         <div class="options">
           <div>
@@ -255,6 +256,11 @@ export default {
         members: "error",
         ObjectArray: "such none filter"
       },
+      signStr: JSON.stringify({
+        news_id: "error",
+        members: "error",
+        ObjectArray: "such none filter"
+      }),
       path: "res",
       deep: 4,
       itemData: {},
@@ -265,6 +271,13 @@ export default {
     val(newVal) {
       try {
         this.data = JSON.parse(this.val);
+      } catch (err) {
+        console.log("JSON ERROR");
+      }
+    },
+    signStr(newVal) {
+      try {
+        this.signKeys = JSON.parse(this.signStr);
       } catch (err) {
         console.log("JSON ERROR");
       }
