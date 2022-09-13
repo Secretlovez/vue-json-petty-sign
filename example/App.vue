@@ -56,8 +56,8 @@
         </div>
       </div>
       <div class="block">
-        <h3>vue-json-pretty:</h3>
-        <vue-json-pretty
+        <h3>vue-json-pretty-sign:</h3>
+        <vue-json-pretty-sign
           :data="data"
           :deep="deep"
           :sign-keys="signKeys"
@@ -158,8 +158,8 @@
         </div>
       </div>
       <div class="block">
-        <h3>vue-json-pretty:</h3>
-        <vue-json-pretty
+        <h3>vue-json-pretty-sign:</h3>
+        <vue-json-pretty-sign
           v-if="renderOK"
           v-model="value"
           :data="data"
@@ -185,7 +185,7 @@
     </div>
     <a
       style="position: fixed; right: 0; top: 0;"
-      href="https://github.com/leezng/vue-json-pretty"
+      href="https://github.com/leezng/vue-json-pretty-sign"
       target="_blank"
       ><img
         style="position: absolute; top: 0; right: 0; border: 0;"
@@ -197,7 +197,7 @@
 </template>
 
 <script>
-import VueJsonPretty from "src";
+import VueJsonPrettySign from "src";
 
 const defaultData = {
   status: 200,
@@ -232,7 +232,7 @@ const defaultData = {
 export default {
   name: "App",
   components: {
-    VueJsonPretty
+    VueJsonPrettySign
   },
   data() {
     return {

@@ -2,8 +2,8 @@
   "name": "vue-json-pretty-sign",
   "version": "0.1.1",
   "description": "A JSON tree view component that is easy to use and also supports data selection.",
-  "author": "leezng <im.leezng@gmail.com>",
-  "main": "lib/vue-json-pretty.js",
+  "author": "secretlovez <secretloveiot@gmail.com>",
+  "main": "lib/vue-json-pretty-sign.js",
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
@@ -14,9 +14,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:leezng/vue-json-pretty.git"
+    "url": "git@github.com:secretlovez/vue-json-pretty-sign.git"
   },
-  "homepage": "https://leezng.github.io/vue-json-pretty",
+  "homepage": "https://secretlovez.github.io/vue-json-petty-sign/",
   "keywords": [
     "vue",
     "json",
@@ -26,7 +26,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/leezng/vue-json-pretty/issues"
+    "url": "https://github.com/secretlovez/vue-json-pretty-sign/issues"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

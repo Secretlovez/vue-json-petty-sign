@@ -58,7 +58,7 @@
           'has-line': showLine
         }"
       >
-        <vue-json-pretty
+        <vue-json-pretty-sign
           v-model="model"
           :parent-data="data"
           :data="item"
@@ -129,7 +129,7 @@ import BracketsRight from "./brackets-right";
 import { getDataType } from "src/utils";
 
 export default {
-  name: "VueJsonPretty",
+  name: "VueJsonPrettySign",
   components: {
     SimpleText,
     VueCheckbox,
@@ -363,7 +363,7 @@ export default {
     propsError: {
       handler(message) {
         if (message) {
-          throw new Error(`[vue-json-pretty] ${message}`);
+          throw new Error(`[vue-json-pretty-sign] ${message}`);
         }
       },
       immediate: true

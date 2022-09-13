@@ -1,6 +1,6 @@
 # vue-json-pretty-sign
 
-本项目基于 vue-json-pretty@1.7.1 版本开发，主要实现标记键值与展示标记键值注释的功能。
+本项目基于 vue-json-pretty-sign@1.7.1 版本开发，主要实现标记键值与展示标记键值注释的功能。
 注意如果父级为标记键值,则其子级将全部被标记.
 
 一个将 JSON 字符串渲染成树形结构的 Vue2.x 组件
@@ -18,7 +18,7 @@
 ## 链接
 
 - 当前项目 demo： [Demo](https://secretlovez.github.io/vue-json-petty-sign/)
-- vue-json-pretty： [Github](https://github.com/leezng/vue-json-pretty)
+- vue-json-pretty-sign： [Github](https://github.com/leezng/vue-json-pretty-sign)
 
 ## 安装
 
@@ -30,19 +30,19 @@
 <template>
   <div>
     ...
-    <vue-json-pretty
+    <vue-json-pretty-sign
       :path="'res'"
       :data="{ key: 'value' }"
       @click="handleClick"
     >
-    </vue-json-pretty>
+    </vue-json-pretty-sign>
   </div>
 </template>
 ```
 
 ```js
 // 更多用法请见demo页面
-import VueJsonPretty from "vue-json-pretty";
+import VueJsonPretty from "vue-json-pretty-sign";
 
 export default {
   components: {
