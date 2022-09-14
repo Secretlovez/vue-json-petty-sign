@@ -48,7 +48,7 @@ if (!isExampleEnv) {
     path: path.resolve(__dirname, distPath),
     filename: `${distPath}/[name].js`,
     globalObject: "this",
-    library: "VueJsonPretty",
+    library: "VueJsonPrettySign",
     libraryTarget: "umd"
   };
   webpackConfig.plugins.push(

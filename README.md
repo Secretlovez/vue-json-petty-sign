@@ -18,7 +18,7 @@
 ## 链接
 
 - 当前项目 demo： [Demo](https://secretlovez.github.io/vue-json-petty-sign/)
-- 基于leezng/vue-json-pretty： [Github](https://github.com/leezng/vue-json-pretty)
+- 基于 leezng/vue-json-pretty： [Github](https://github.com/leezng/vue-json-pretty)
 
 ## 安装
 
@@ -42,11 +42,11 @@
 
 ```js
 // 更多用法请见demo页面
-import VueJsonPretty from "vue-json-pretty-sign";
+import VueJsonPrettySign from "vue-json-pretty-sign";
 
 export default {
   components: {
-    VueJsonPretty
+    VueJsonPrettySign
   }
 };
 ```
