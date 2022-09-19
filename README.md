@@ -64,7 +64,7 @@ export default {
 | showLine               | 基础 | 是否显示缩紧标识线                        | boolean                                       | true     |
 | showDoubleQuotes       | 基础 | 是否展示 key 名的双引号                   | boolean                                       | true     |
 | showDoubleQuotes       | 基础 | 是否展示 key 名的双引号                   | boolean                                       | true     |
-| showSignComment        | 基础 | 是否标记的键值注释                        | boolean                                       | true     |
+| showSignComment        | 基础 | 是否展示标记的键值注释                    | boolean                                       | true     |
 | signKeys               | 高级 | 标记的键值对                              | Object                                        | null     |
 | highlightMouseoverNode | 基础 | 是否在 mouseover 的时候高亮               | boolean                                       | false    |
 | v-model                | 高级 | 双向绑定选中的数据层级                    | string, array                                 | -, []    |

@@ -223,8 +223,18 @@ const defaultData = {
       members: ["Daniel", "Mike", "John"],
       ObjectArray: [
         { title: 1, Headers: "number" },
-        { title: 2, Headers: "number" }
-      ]
+        { title: 2, Headers: "object" }
+      ],
+      ObjectObject: {
+        title: {
+          en: "helloWorld",
+          zh: "你好，世界！"
+        },
+        content: {
+          en: "c++ no.1",
+          zh: "c++ 天下第一 "
+        }
+      }
     }
   ]
 };
@@ -254,12 +264,14 @@ export default {
       signKeys: {
         news_id: "error",
         members: "error",
-        ObjectArray: "such none filter"
+        "ObjectArray[0].title": "such none filter",
+        "data[2].ObjectObject.content": "is rubbish"
       },
       signStr: JSON.stringify({
         news_id: "error",
         members: "error",
-        ObjectArray: "such none filter"
+        "ObjectArray[0].title": "such none filter",
+        "data[2].ObjectObject.content": "is rubbish"
       }),
       path: "res",
       deep: 4,

@@ -26,6 +26,10 @@ export default {
       type: [Number, String],
       default: ""
     },
+    parentKey: {
+      type: [Number, String],
+      default: ""
+    },
     showSignComment: {
       type: Boolean,
       default: true
@@ -45,6 +49,13 @@ export default {
         this.signKeys[this.currentKey] !== ""
       ) {
         signValue = ` // ${this.signKeys[this.currentKey]}`;
+      }
+      if (
+        this.signKeys &&
+        this.signKeys[this.parentKey] !== undefined &&
+        this.signKeys[this.parentKey] !== ""
+      ) {
+        signValue = ` // ${this.signKeys[this.parentKey]}`;
       }
       return this.showSignComment && signValue;
     },

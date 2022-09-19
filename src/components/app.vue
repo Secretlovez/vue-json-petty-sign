@@ -77,6 +77,7 @@
           :collapsed-on-click-brackets="collapsedOnClickBrackets"
           :current-key="key"
           :parent-key="prevKey"
+          :parent-type="prevType"
           :sign-keys="signKeys"
           :current-deep="currentDeep + 1"
           :custom-value-formatter="customValueFormatter"
@@ -94,6 +95,7 @@
         :show-comma="notLastKey"
         :show-sign-comment="showSignComment"
         :current-key="currentKey"
+        :parent-key="prevKey"
         :sign-keys="signKeys"
       />
     </template>
@@ -247,6 +249,11 @@ export default {
     parentKey: {
       type: [Number, String],
       default: ""
+    },
+    // 父组件类型
+    parentType: {
+      type: String,
+      default: "null"
     }
     /* outer props */
   },
@@ -327,12 +334,31 @@ export default {
       if (
         this.parentKey &&
         this.signKeys &&
-        this.signKeys[this.parentKey] !== undefined
+        (this.signKeys[this.parentKey] !== undefined ||
+          this.signKeys[`${this.parentKey}.${this.currentKey}`] !== undefined)
       ) {
-        return this.parentKey;
+        if (
+          this.signKeys[`${this.parentKey}.${this.currentKey}`] !== undefined
+        ) {
+          return `${this.parentKey}.${this.currentKey}`;
+        } else {
+          return this.parentKey;
+        }
+      } else if (this.parentKey) {
+        if (!this.isObject(this.data)) {
+          return this.currentKey;
+        } else if (this.parentType === "array") {
+          return `${this.parentKey}[${this.currentKey}]`;
+        } else {
+          return `${this.parentKey}.${this.currentKey}`;
+        }
       } else {
         return this.currentKey;
       }
+    },
+    // 当前数据类型
+    prevType() {
+      return getDataType(this.data);
     },
     // 当前键值对为标记键值
     signClass() {
@@ -340,7 +366,8 @@ export default {
       if (
         this.signKeys &&
         (this.signKeys[this.currentKey] !== undefined ||
-          this.signKeys[this.parentKey] !== undefined)
+          this.signKeys[this.parentKey] !== undefined ||
+          this.signKeys[`${this.parentKey}.${this.currentKey}`] !== undefined)
       ) {
         signClass = "vjs-key__sign";
       }

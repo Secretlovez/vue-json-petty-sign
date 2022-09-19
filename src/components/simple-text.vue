@@ -76,6 +76,17 @@ export default {
       ) {
         signValue = ` // ${this.signKeys[this.currentKey]}`;
       }
+      const index = this.parentKey.lastIndexOf(".");
+      if (
+        index !== -1 &&
+        this.signKeys &&
+        this.signKeys[this.parentKey] !== undefined &&
+        this.signKeys[this.parentKey] !== "" &&
+        this.parentKey.slice(index + 1, this.parentKey.length) ===
+          this.currentKey
+      ) {
+        signValue = ` // ${this.signKeys[this.parentKey]}`;
+      }
       return this.showSignComment && signValue;
     },
     // 当前数据类型
