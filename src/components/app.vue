@@ -27,18 +27,20 @@
       />
     </template>
 
-    <template v-if="Array.isArray(data) || isObject(data)">
+    <template v-if="Array.isArray(currentData) || isObject(currentData)">
       <!-- 左闭合 -->
       <brackets-left
         :visible.sync="visible"
-        :data="data"
+        :data="currentData"
         :brackets-class="`${signClass}`"
         :show-length="showLength"
         :collapsed-on-click-brackets="collapsedOnClickBrackets"
         :show-comma="notLastKey"
         :show-sign-comment="showSignComment"
         :current-key="currentKey"
+        :parent-key="prevKey"
         :sign-keys="signKeys"
+        :add-keys="addKeys"
       >
         <span
           v-if="currentDeep > 1 && !Array.isArray(parentData)"
@@ -50,7 +52,7 @@
 
       <!-- 数据内容, data 为对象时, key 表示键名, 为数组时表示索引 -->
       <div
-        v-for="(item, key) in data"
+        v-for="(item, key) in currentData"
         v-show="visible"
         :key="key"
         :class="{
@@ -60,7 +62,7 @@
       >
         <vue-json-pretty-sign
           v-model="model"
-          :parent-data="data"
+          :parent-data="currentData"
           :data="item"
           :deep="deep"
           :show-length="showLength"
@@ -79,6 +81,7 @@
           :parent-key="prevKey"
           :parent-type="prevType"
           :sign-keys="signKeys"
+          :add-keys="addKeys"
           :current-deep="currentDeep + 1"
           :custom-value-formatter="customValueFormatter"
           @click="handleItemClick"
@@ -89,7 +92,7 @@
       <!-- 右闭合 -->
       <brackets-right
         :visible.sync="visible"
-        :data="data"
+        :data="currentData"
         :brackets-class="`${signClass}`"
         :collapsed-on-click-brackets="collapsedOnClickBrackets"
         :show-comma="notLastKey"
@@ -97,6 +100,7 @@
         :current-key="currentKey"
         :parent-key="prevKey"
         :sign-keys="signKeys"
+        :add-keys="addKeys"
       />
     </template>
 
@@ -106,11 +110,12 @@
       :show-double-quotes="showDoubleQuotes"
       :show-comma="notLastKey"
       :parent-data="parentData"
-      :data="data"
+      :data="currentData"
       :current-key="currentKey"
       :parent-key="prevKey"
       :show-sign-comment="showSignComment"
       :sign-keys="signKeys"
+      :add-keys="addKeys"
     >
       <span
         v-if="parentData && currentKey && !Array.isArray(parentData)"
@@ -123,6 +128,7 @@
 </template>
 
 <script>
+import { set } from "lodash";
 import SimpleText from "./simple-text";
 import VueCheckbox from "./checkbox";
 import VueRadio from "./radio";
@@ -164,7 +170,7 @@ export default {
     // 数据层级顶级路径
     path: {
       type: String,
-      default: "root"
+      default: ""
     },
     // 定义数据层级支持的选中方式, 默认无该功能
     selectableType: {
@@ -226,6 +232,11 @@ export default {
       type: Object,
       default: null
     },
+    // 标记键值对
+    addKeys: {
+      type: Object,
+      default: null
+    },
 
     /* outer props */
 
@@ -281,7 +292,15 @@ export default {
         this.$emit("input", val);
       }
     },
-
+    currentData() {
+      let currentData = this.data;
+      if (this.currentDeep === 1 && this.addKeys) {
+        for (let key in this.addKeys) {
+          set(currentData, key, this.addKeys[key]);
+        }
+      }
+      return currentData;
+    },
     // 获取当前 data 中最后一项的 key 或 索引, 便于界面判断是否添加 ","
     lastKey() {
       if (Array.isArray(this.parentData)) {
@@ -301,7 +320,7 @@ export default {
     // 当前的树是否支持选中功能
     selectable() {
       return (
-        this.pathSelectable(this.path, this.data) &&
+        this.pathSelectable(this.path, this.currentData) &&
         (this.isMultiple || this.isSingle)
       );
     },
@@ -331,34 +350,19 @@ export default {
     },
     // 上一级如果为标记键值对则向下传递，否则传递当前键值名称
     prevKey() {
-      if (
-        this.parentKey &&
-        this.signKeys &&
-        (this.signKeys[this.parentKey] !== undefined ||
-          this.signKeys[`${this.parentKey}.${this.currentKey}`] !== undefined)
-      ) {
-        if (
-          this.signKeys[`${this.parentKey}.${this.currentKey}`] !== undefined
-        ) {
-          return `${this.parentKey}.${this.currentKey}`;
-        } else {
-          return this.parentKey;
-        }
-      } else if (this.parentKey) {
-        if (!this.isObject(this.data)) {
-          return this.currentKey;
-        } else if (this.parentType === "array") {
-          return `${this.parentKey}[${this.currentKey}]`;
-        } else {
-          return `${this.parentKey}.${this.currentKey}`;
-        }
+      if (this.parentKey && this.signKeys) {
+        return this.signKeys[this.currentKey] !== undefined
+          ? this.currentKey
+          : this.signKeys[this.parentKey] !== undefined
+          ? this.parentKey
+          : this.path;
       } else {
         return this.currentKey;
       }
     },
-    // 当前数据类型
+    // 上一级数据类型
     prevType() {
-      return getDataType(this.data);
+      return getDataType(this.currentData);
     },
     // 当前键值对为标记键值
     signClass() {
@@ -367,11 +371,35 @@ export default {
         this.signKeys &&
         (this.signKeys[this.currentKey] !== undefined ||
           this.signKeys[this.parentKey] !== undefined ||
-          this.signKeys[`${this.parentKey}.${this.currentKey}`] !== undefined)
+          this.signKeys[`${this.path}`] !== undefined)
       ) {
         signClass = "vjs-key__sign";
       }
+      if (
+        this.addKeys &&
+        (this.addKeys[this.currentKey] !== undefined ||
+          this.addKeys[this.parentKey] !== undefined ||
+          this.addKeys[`${this.path}`] !== undefined)
+      ) {
+        signClass = "vjs-key__notexists";
+      }
       return `${signClass}`;
+    },
+    signCommentClass() {
+      let signCommentClass = "vjs-comment";
+      if (
+        this.addKeys &&
+        ((this.currentKey &&
+          this.addKeys[this.currentKey] !== undefined &&
+          this.addKeys[this.currentKey] !== "") ||
+          (this.parentKey &&
+            this.addKeys[this.parentKey] !== undefined &&
+            this.addKeys[this.parentKey] !== ""))
+      ) {
+        signCommentClass = `vjs-comment__notexists`;
+      }
+
+      return signCommentClass;
     },
     propsError() {
       const error =
@@ -436,7 +464,7 @@ export default {
       if (e._uid && e._uid !== this._uid) return;
       e._uid = this._uid;
 
-      this.$emit("click", this.path, this.data);
+      this.$emit("click", this.path, this.currentData);
       if (this.selectable && this.selectOnClickNode) {
         this.handleValueChange("tree");
       }
@@ -474,14 +502,18 @@ export default {
     },
 
     getChildPath(key) {
-      return (
-        this.path +
-        (Array.isArray(this.data)
-          ? `[${key}]`
-          : key.includes(".")
-          ? `["${key}"]`
-          : `.${key}`)
-      );
+      return this.path !== ""
+        ? this.path +
+            (Array.isArray(this.currentData)
+              ? `[${key}]`
+              : key.includes(".")
+              ? `["${key}"]`
+              : `.${key}`)
+        : Array.isArray(this.currentData)
+        ? `${key}`
+        : key.includes(".")
+        ? `"${key}"`
+        : `${key}`;
     }
   },
   // 捕获一个来自子组件的错误

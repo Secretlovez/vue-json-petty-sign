@@ -1,14 +1,13 @@
 <template>
   <div class="example">
     <div class="example-box">
-      <h2 class="title">
-        EXAMPLE 1
-      </h2>
       <div class="block">
         <h3>JSON:</h3>
         <textarea v-model="val" />
         <h3>signKeys:</h3>
         <textarea v-model="signStr" />
+        <h3>addKeys:</h3>
+        <textarea v-model="addStr" />
         <h3>Options:</h3>
         <div class="options">
           <div>
@@ -61,10 +60,12 @@
           :data="data"
           :deep="deep"
           :sign-keys="signKeys"
+          :add-keys="addKeys"
           :show-sign-comment="showSignComment"
           :show-double-quotes="showDoubleQuotes"
           :show-length="showLength"
           :show-line="showLine"
+          path=""
           :highlight-mouseover-node="highlightMouseoverNode"
           :collapsed-on-click-brackets="collapsedOnClickBrackets"
           :custom-value-formatter="
@@ -200,43 +201,72 @@
 import VueJsonPrettySign from "src";
 
 const defaultData = {
-  status: 200,
-  error: "",
-  data: [
+  accountVo: [
     {
-      news_id: 51184,
-      title: "iPhone X Review: Innovative future with real black technology",
-      source: "Netease phone"
-    },
-    {
-      news_id: 51183,
-      title:
-        "Traffic paradise: How to design streets for people and unmanned vehicles in the future?",
-      source: "Netease smart",
-      link: "http://netease.smart/traffic-paradise/1235"
-    },
-    {
-      news_id: 51182,
-      title:
-        "Teslamask's American Business Relations: The government does not pay billions to build factories",
-      source: "AI Finance",
-      members: ["Daniel", "Mike", "John"],
-      ObjectArray: [
-        { title: 1, Headers: "number" },
-        { title: 2, Headers: "object" }
-      ],
-      ObjectObject: {
-        title: {
-          en: "helloWorld",
-          zh: "你好，世界！"
-        },
-        content: {
-          en: "c++ no.1",
-          zh: "c++ 天下第一 "
-        }
+      cameraTfPsrVo: {
+        psrId: "3509301",
+        astId: "3697068483",
+        name: "默认-设备名称",
+        psrType: "默认-设备类型",
+        runDevNum: "默认-运行编号",
+        city: "默认-所属地市",
+        maintOrg: "默认-运维单位",
+        maintGroup: "默认-维护班组",
+        equipmentOwner: "默认-设备主人",
+        onlineState: "0",
+        installLocation: "zf01",
+        equip: "默认-所属设备",
+        longitude: 10,
+        latitude: 20,
+        rangeSituation: "01",
+        areaMeteorological: "01",
+        instDate: "2022-09-21 19:08:01",
+        flowStartTime: "2022-09-21 19:08:01",
+        flowEndTime: "2022-09-21 19:08:01",
+        flowCapacity: 15,
+        repCycle: 30,
+        serviceOrg: "默认-维保单位",
+        servicePhone: "182924935619",
+        serviceContact: "默认-维保联系人",
+        ctime: "2022-09-21 19:08:01",
+        lastUpdateTime: "2022-09-21 19:08:01"
+      },
+      cameraTfAstVo: {
+        astId: "10235",
+        equipCode: "默认-设备编码",
+        astNature: "01",
+        astOrg: "111",
+        astOrgName: "默认-资产单位名称",
+        astNum: "默认-资产编号",
+        projectNum: "默认-工程编号",
+        projectName: "默认-工程名称",
+        source: "01",
+        wbsNum: "默认-WBS编码",
+        deployState: "10",
+        astType: "9604002",
+        cameraType: "01",
+        operateDate: "2022-09-21 19:08:01",
+        manufactureNum: "默认-出厂编号",
+        manufactureDate: "2022-09-21 19:08:01",
+        model: "21321",
+        manufacturer: "默认-生产厂家编码",
+        manufactureCountry: "AD",
+        productDate: "2022-09-21 19:08:01",
+        communiOperator: "01",
+        simNum: "906412006",
+        utcNum: "362909",
+        flowCode: "默认-流水码",
+        remark: "默认-备注",
+        extendedfunction: "默认-拓展功能",
+        expandname: "默认-扩展名称",
+        ifid: "00226603",
+        ip: "10.16.196",
+        ctime: "2022-09-21 19:08:01",
+        lastUpdateTime: "2022-09-21 19:08:01"
       }
     }
-  ]
+  ],
+  accountClass: "9604002"
 };
 
 export default {
@@ -262,16 +292,23 @@ export default {
       useCustomLinkFormatter: false,
       showSignComment: true,
       signKeys: {
+        status: "stash code",
         news_id: "error",
         members: "error",
-        "ObjectArray[0].title": "such none filter",
-        "data[2].ObjectObject.content": "is rubbish"
+        "data[2].ObjectArray[0].title": "such none filter",
+        "data[2].ObjectObject.content": "is rubbish",
+        "accountVo[0].cameraTfPsrVo.psrType":
+          "psrType必须是[9601 9602 9604001 9604002]中的一个"
+      },
+      addKeys: {
+        "data[2].ObjectObject.error": "字段缺失"
       },
       signStr: JSON.stringify({
-        news_id: "error",
-        members: "error",
-        "ObjectArray[0].title": "such none filter",
-        "data[2].ObjectObject.content": "is rubbish"
+        "accountVo[0].cameraTfPsrVo.psrType":
+          "psrType必须是[9601 9602 9604001 9604002]中的一个"
+      }),
+      addStr: JSON.stringify({
+        "data[2].ObjectObject.error": "字段缺失"
       }),
       path: "res",
       deep: 4,

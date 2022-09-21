@@ -20,10 +20,10 @@
         {{ closedBracketsGenerator(data) }}
       </span>
 
-      <span v-if="showLength" class="vjs-comment">
+      <span v-if="showLength" :class="signCommentClass">
         {{ lengthGenerator(data) }}
       </span>
-      <span v-if="signComment" class="vjs-comment">
+      <span v-if="signComment" :class="signCommentClass">
         {{ signComment }}
       </span>
     </span>
@@ -49,8 +49,16 @@ export default {
       type: [Number, String],
       default: ""
     },
-    // 错误信息
+    parentKey: {
+      type: [Number, String],
+      default: ""
+    },
+    // 标记信息
     signKeys: {
+      type: Object,
+      default: null
+    },
+    addKeys: {
       type: Object,
       default: null
     }
@@ -65,7 +73,30 @@ export default {
       ) {
         signValue = ` // ${this.signKeys[this.currentKey]}`;
       }
+      if (
+        this.signKeys &&
+        this.signKeys[this.parentKey] !== undefined &&
+        this.signKeys[this.parentKey] !== ""
+      ) {
+        signValue = ` // ${this.signKeys[this.parentKey]}`;
+      }
       return this.showSignComment && signValue;
+    },
+    signCommentClass() {
+      let signCommentClass = "vjs-comment";
+      if (
+        this.addKeys &&
+        ((this.currentKey &&
+          this.addKeys[this.currentKey] !== undefined &&
+          this.addKeys[this.currentKey] !== "") ||
+          (this.parentKey &&
+            this.addKeys[this.parentKey] !== undefined &&
+            this.addKeys[this.parentKey] !== ""))
+      ) {
+        signCommentClass = `vjs-comment__notexists`;
+      }
+
+      return signCommentClass;
     }
   },
   methods: {

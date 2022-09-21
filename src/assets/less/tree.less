@@ -45,9 +45,22 @@
     color: @color-error;
     font-style: italic;
   }
+  .@{css-prefix}-comment__notexists {
+    color: @color-null;
+    font-style: italic;
+  }
   .@{css-prefix}-key__sign {
     .mixin-value-style(@color-error);
   }
+  
+  .@{css-prefix}-key__notexists {
+    .mixin-value-style(@color-null);
+  }
+
+  .@{css-prefix}-value__notexists {
+    .mixin-value-style(@color-null) !important;
+  }
+
   .@{css-prefix}-value__null {
     .mixin-value-style(@color-success);
   }

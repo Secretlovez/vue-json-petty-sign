@@ -6,7 +6,7 @@
     >
       {{ bracketsFormatter(Array.isArray(data) ? "]" : "}") }}
     </span>
-    <span v-if="signComment" class="vjs-comment">
+    <span v-if="signComment" :class="signCommentClass">
       {{ signComment }}
     </span>
   </div>
@@ -38,6 +38,10 @@ export default {
     signKeys: {
       type: Object,
       default: null
+    },
+    addKeys: {
+      type: Object,
+      default: null
     }
   },
   computed: {
@@ -58,6 +62,22 @@ export default {
         signValue = ` // ${this.signKeys[this.parentKey]}`;
       }
       return this.showSignComment && signValue;
+    },
+    signCommentClass() {
+      let signCommentClass = "vjs-comment";
+      if (
+        this.addKeys &&
+        ((this.currentKey &&
+          this.addKeys[this.currentKey] !== undefined &&
+          this.addKeys[this.currentKey] !== "") ||
+          (this.parentKey &&
+            this.addKeys[this.parentKey] !== undefined &&
+            this.addKeys[this.parentKey] !== ""))
+      ) {
+        signCommentClass = `vjs-comment__notexists`;
+      }
+
+      return signCommentClass;
     },
     // 当前数据类型
     dataType() {

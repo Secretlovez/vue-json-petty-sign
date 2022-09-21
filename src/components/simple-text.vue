@@ -8,7 +8,8 @@
     />
     <span v-else :class="valueClass">{{ defaultFormatter(data) }}</span>
     <span v-if="showComma" :class="valueClass">,</span>
-    <span v-if="signComment" class="vjs-comment"> {{ signComment }}</span>
+    <span v-if="signComment" :class="signCommentClass"> {{ signComment }}</span>
+    <!-- <div>{{ signComment }}</div> -->
   </div>
 </template>
 
@@ -44,6 +45,10 @@ export default {
       type: Object,
       default: null
     },
+    addKeys: {
+      type: Object,
+      default: null
+    },
     customValueFormatter: {
       type: Function,
       default: null
@@ -63,6 +68,17 @@ export default {
         this.signKeys[this.parentKey] !== undefined
       ) {
         signClass = "vjs-value__sign";
+      }
+      if (
+        this.addKeys &&
+        ((this.currentKey &&
+          this.addKeys[this.currentKey] !== undefined &&
+          this.addKeys[this.currentKey] !== "") ||
+          (this.parentKey &&
+            this.addKeys[this.parentKey] !== undefined &&
+            this.addKeys[this.parentKey] !== ""))
+      ) {
+        signClass = `vjs-value__notexists`;
       }
       return `vjs-value vjs-value__${this.dataType} ${signClass}`;
     },
@@ -88,6 +104,22 @@ export default {
         signValue = ` // ${this.signKeys[this.parentKey]}`;
       }
       return this.showSignComment && signValue;
+    },
+    signCommentClass() {
+      let signCommentClass = "vjs-comment";
+      if (
+        this.addKeys &&
+        ((this.currentKey &&
+          this.addKeys[this.currentKey] !== undefined &&
+          this.addKeys[this.currentKey] !== "") ||
+          (this.parentKey &&
+            this.addKeys[this.parentKey] !== undefined &&
+            this.addKeys[this.parentKey] !== ""))
+      ) {
+        signCommentClass = `vjs-comment__notexists`;
+      }
+
+      return signCommentClass;
     },
     // 当前数据类型
     dataType() {
