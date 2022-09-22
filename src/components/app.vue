@@ -63,7 +63,7 @@
         <vue-json-pretty-sign
           v-model="model"
           :parent-data="currentData"
-          :data="item"
+          :data="isUndefined(item)"
           :deep="deep"
           :show-length="showLength"
           :show-double-quotes="showDoubleQuotes"
@@ -292,6 +292,7 @@ export default {
         this.$emit("input", val);
       }
     },
+
     currentData() {
       let currentData = this.data;
       if (this.currentDeep === 1 && this.addKeys) {
@@ -299,7 +300,8 @@ export default {
           set(currentData, key, this.addKeys[key]);
         }
       }
-      return currentData;
+      if (this.data === "undefined") return "undefined";
+      else return currentData;
     },
     // 获取当前 data 中最后一项的 key 或 索引, 便于界面判断是否添加 ","
     lastKey() {
@@ -425,6 +427,12 @@ export default {
     }
   },
   methods: {
+    isUndefined(item) {
+      // 键值名为undefined时候标记
+      if (getDataType(item) === "undefined")
+        return "undefined-{03C69C01-9EA8-4E19-98B5-539AFED96E94}";
+      else return item;
+    },
     handleValueChange(emitType) {
       if (this.isMultiple && (emitType === "checkbox" || emitType === "tree")) {
         // handle multiple

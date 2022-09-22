@@ -8,7 +8,8 @@
 }
 
 .@{css-prefix}-tree {
-  font-family: "Monaco", "Menlo", "Consolas", "Bitstream Vera Sans Mono", monospace;
+  font-family: "Monaco", "Menlo", "Consolas", "Bitstream Vera Sans Mono",
+    monospace;
   font-size: 14px;
 
   &.is-root {
@@ -52,7 +53,7 @@
   .@{css-prefix}-key__sign {
     .mixin-value-style(@color-error);
   }
-  
+
   .@{css-prefix}-key__notexists {
     .mixin-value-style(@color-null);
   }
@@ -62,6 +63,9 @@
   }
 
   .@{css-prefix}-value__null {
+    .mixin-value-style(@color-success);
+  }
+  .@{css-prefix}-value__undefined {
     .mixin-value-style(@color-success);
   }
 
@@ -76,7 +80,7 @@
   .@{css-prefix}-value__string {
     .mixin-value-style(@color-success);
   }
-  
+
   .@{css-prefix}-value__sign {
     .mixin-value-style(@color-error);
   }

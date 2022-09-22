@@ -123,6 +123,8 @@ export default {
     },
     // 当前数据类型
     dataType() {
+      if (this.data === "undefined-{03C69C01-9EA8-4E19-98B5-539AFED96E94}")
+        return `undefined`;
       return getDataType(this.data);
     }
   },
@@ -130,6 +132,9 @@ export default {
     defaultFormatter(data) {
       let text = data;
       if (this.dataType === "string") text = `"${text}"`;
+      if (this.dataType === "null" && data === null) text = `${text}`;
+      if (data === "undefined-{03C69C01-9EA8-4E19-98B5-539AFED96E94}")
+        text = `undefined`;
       return text;
     },
 
