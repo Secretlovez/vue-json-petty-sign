@@ -32,6 +32,7 @@
       <brackets-left
         :visible.sync="visible"
         :data="currentData"
+        :deep="currentDeep"
         :brackets-class="`${signClass}`"
         :show-length="showLength"
         :collapsed-on-click-brackets="collapsedOnClickBrackets"
@@ -41,6 +42,9 @@
         :parent-key="prevKey"
         :sign-keys="signKeys"
         :add-keys="addKeys"
+        :show-copy="showCopy"
+        :copy-title="copyTitle"
+        :copy-complete-title="copyCompleteTitle"
       >
         <span
           v-if="currentDeep > 1 && !Array.isArray(parentData)"
@@ -232,10 +236,25 @@ export default {
       type: Object,
       default: null
     },
-    // 标记键值对
+    // 添加键值对
     addKeys: {
       type: Object,
       default: null
+    },
+    // 是否展示复制按钮
+    showCopy: {
+      type: Boolean,
+      default: true
+    },
+    // 复制按钮文字
+    copyTitle: {
+      type: String,
+      default: "复制"
+    },
+    // 复制完成按钮文字
+    copyCompleteTitle: {
+      type: String,
+      default: "已复制"
     },
 
     /* outer props */

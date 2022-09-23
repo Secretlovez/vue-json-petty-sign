@@ -244,6 +244,12 @@ const defaultData = {
     }
   ]
 };
+const signData = {
+  news_id: "error",
+  members: "error",
+  "ObjectArray[0].title": "such none filter",
+  "data[2].ObjectObject.content": "is rubbish"
+};
 const addData = {
   "data[2].ObjectObject.lang": "javascript"
 };
@@ -270,22 +276,12 @@ export default {
       collapsedOnClickBrackets: true,
       useCustomLinkFormatter: false,
       showSignComment: true,
-      signKeys: {
-        news_id: "error",
-        members: "error",
-        "ObjectArray[0].title": "such none filter",
-        "data[2].ObjectObject.content": "is rubbish"
-      },
-      signStr: JSON.stringify({
-        news_id: "error",
-        members: "error",
-        "ObjectArray[0].title": "such none filter",
-        "data[2].ObjectObject.content": "is rubbish"
-      }),
+      signKeys: signData,
+      signStr: JSON.stringify(signData),
       addKeys: addData,
       addStr: JSON.stringify(addData),
       path: "res",
-      deep: 5,
+      deep: 4,
       itemData: {},
       itemPath: ""
     };
@@ -301,6 +297,13 @@ export default {
     signStr(newVal) {
       try {
         this.signKeys = JSON.parse(this.signStr);
+      } catch (err) {
+        console.log("JSON ERROR");
+      }
+    },
+    signStr(newVal) {
+      try {
+        this.signKeys = JSON.parse(this.addData);
       } catch (err) {
         console.log("JSON ERROR");
       }

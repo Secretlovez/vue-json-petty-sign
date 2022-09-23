@@ -27,6 +27,12 @@
         {{ signComment }}
       </span>
     </span>
+    <span
+      v-if="deep === 1 && showCopy"
+      :class="`vjs-tree__copy ${hasCopied ? 'vjs-tree__copy-success' : ''} `"
+      @click="onCopyText"
+      >{{ hasCopied ? copyCompleteTitle : copyTitle }}
+    </span>
   </div>
 </template>
 
@@ -53,6 +59,10 @@ export default {
       type: [Number, String],
       default: ""
     },
+    deep: {
+      type: [Number, String],
+      default: 1
+    },
     // 标记信息
     signKeys: {
       type: Object,
@@ -61,7 +71,27 @@ export default {
     addKeys: {
       type: Object,
       default: null
+    },
+    // 是否展示复制按钮
+    showCopy: {
+      type: Boolean,
+      default: true
+    },
+    // 复制按钮文字
+    copyTitle: {
+      type: String,
+      default: "复制"
+    },
+    // 复制完成按钮文字
+    copyCompleteTitle: {
+      type: String,
+      default: "已复制"
     }
+  },
+  data() {
+    return {
+      hasCopied: false
+    };
   },
   computed: {
     signComment() {
@@ -100,6 +130,20 @@ export default {
     }
   },
   methods: {
+    async onCopyText() {
+      if (this.hasCopied) return;
+      let copyText = "";
+      if (typeof this.data === "string") {
+        copyText = this.data;
+      } else {
+        copyText = JSON.stringify(this.data);
+      }
+      copyText = await navigator.clipboard.writeText(copyText);
+      this.hasCopied = true;
+      setTimeout(() => {
+        this.hasCopied = false;
+      }, 2000);
+    },
     // 关闭括号生成器
     closedBracketsGenerator(data) {
       const brackets = Array.isArray(data) ? "[...]" : "{...}";

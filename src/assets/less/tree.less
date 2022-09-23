@@ -34,7 +34,20 @@
       border-left: 1px dotted @border-color;
     }
   }
+  .@{css-prefix}-tree__copy {
+    position: absolute;
+    display: inline-block;
+    right: 5px;
+    top: 5px;
 
+    &-success {
+      color: @color-success !important;
+    }
+    &:hover {
+      color: @color-primary;
+    }
+    cursor: pointer;
+  }
   .@{css-prefix}-tree__brackets {
     cursor: pointer;
     &:hover {
