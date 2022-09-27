@@ -10,10 +10,14 @@
 
 ## 添加参数
 
-| 属性            | 级别 | 说明               | 类型    | 默认值 |
-| --------------- | ---- | ------------------ | ------- | ------ |
-| showSignComment | 基础 | 是否标记的键值注释 | boolean | true   |
-| signKeys        | 高级 | 标记的键值对       | Object  | null   |
+| 属性              | 级别 | 说明                       | 类型    | 默认值   |
+| ----------------- | ---- | -------------------------- | ------- | -------- |
+| showSignComment   | 基础 | 是否标记的键值注释         | boolean | true     |
+| signKeys          | 高级 | 标记的键值对               | Object  | null     |
+| addKeys           | 基础 | 额外标记 Json 不存在键值对 | Object  | null     |
+| showCopy          | 基础 | 显示复制按钮               | boolean | true     |
+| copyTitle         | 基础 | 复制按钮文字               | String  | "复制"   |
+| copyCompleteTitle | 高级 | 复制完成按钮文字           | String  | "已复制" |
 
 ## 链接
 
@@ -68,7 +72,7 @@ export default {
 | signKeys               | 高级 | 标记的键值对                              | Object                                        | null     |
 | highlightMouseoverNode | 基础 | 是否在 mouseover 的时候高亮               | boolean                                       | false    |
 | v-model                | 高级 | 双向绑定选中的数据层级                    | string, array                                 | -, []    |
-| path                   | 高级 | 定义最顶层数据层级                        | string                                        | root     |
+| path                   | 高级 | 定义最顶层数据层级                        | string                                        | ''       |
 | pathChecked            | 高级 | 定义哪些数据层级是已被选中的              | array                                         | []       |
 | pathSelectable         | 高级 | 定义哪些数据层级是可以被选中的            | Function(itemPath, itemData)                  | -        |
 | selectableType         | 高级 | 定义组件支持的选中方式，默认无选中功能    | enum: -, multiple, single                     | -        |

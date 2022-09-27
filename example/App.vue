@@ -38,6 +38,10 @@
             <input v-model="showSignComment" type="checkbox" />
           </div>
           <div>
+            <label>showCopy</label>
+            <input v-model="showCopy" type="checkbox" />
+          </div>
+          <div>
             <label>use custom formatter</label>
             <input v-model="useCustomLinkFormatter" type="checkbox" />
           </div>
@@ -68,6 +72,7 @@
           :show-double-quotes="showDoubleQuotes"
           :show-length="showLength"
           :show-line="showLine"
+          :show-copy="showCopy"
           :highlight-mouseover-node="highlightMouseoverNode"
           :collapsed-on-click-brackets="collapsedOnClickBrackets"
           :custom-value-formatter="
@@ -280,7 +285,8 @@ export default {
       signStr: JSON.stringify(signData),
       addKeys: addData,
       addStr: JSON.stringify(addData),
-      path: "res",
+      showCopy: true,
+      path: "root",
       deep: 4,
       itemData: {},
       itemPath: ""
