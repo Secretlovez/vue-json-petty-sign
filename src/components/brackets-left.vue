@@ -138,7 +138,16 @@ export default {
       } else {
         copyText = JSON.stringify(this.data);
       }
-      copyText = await navigator.clipboard.writeText(copyText);
+      // https或者本地调试可用
+      // copyText = await navigator.clipboard.writeText(copyText);
+      // http 可用，移动端会出现问题
+      const input = document.createElement("input");
+      document.body.appendChild(input);
+      input.setAttribute("value", copyText);
+      input.select();
+      document.execCommand("copy");
+      document.body.removeChild(input);
+
       this.hasCopied = true;
       setTimeout(() => {
         this.hasCopied = false;
